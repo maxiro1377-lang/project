@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Types: Black Hat vs White Hat</title>
+    <style>
+        /* Base styles and reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --black-hat-color: #ff3b30;
+            --white-hat-color: #4cd964;
+            --gray-hat-color: #8e8e93;
+            --dark-bg: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #f5f5f7;
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header styles */
+        header {
+            background: linear-gradient(135deg, #0c0c0c 0%, #2d2d2d 100%);
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--white-hat-color), var(--black-hat-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: titleGlow 3s infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% {
+                text-shadow: 0 0 10px rgba(76, 217, 100, 0.5);
+            }
+            100% {
+                text-shadow: 0 0 20px rgba(255, 59, 48, 0.5);
+            }
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Binary animation background */
+        .binary-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            z-index: 1;
+        }
+        
+        .binary {
+            position: absolute;
+            color: var(--text-color);
+            font-family: monospace;
+            font-size: 1.2rem;
+            animation: fall linear infinite;
+        }
+        
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        
+        /* Navigation */
+        nav {
+            background-color: rgba(30, 30, 30, 0.9);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .nav-item {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--text-color);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-item:hover::after {
+            width: 100%;
+        }
+        
+        .nav-item.active {
+            background-color: var(--text-color);
+            color: var(--dark-bg);
+        }
+        
+        /* Main content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        section {
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--text-color);
+        }
+        
+        .hat-section h2::after {
+            width: 100%;
+        }
+        
+        .white-hat h2::after {
+            background: var(--white-hat-color);
+        }
+        
+        .black-hat h2::after {
+            background: var(--black-hat-color);
+        }
+        
+        .gray-hat h2::after {
+            background: var(--gray-hat-color);
+        }
+        
+        /* Card styles */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+        
+        .white-hat-card::before {
+            background: var(--white-hat-color);
+        }
+        
+        .black-hat-card::before {
+            background: var(--black-hat-color);
+        }
+        
+        .gray-hat-card::before {
+            background: var(--gray-hat-color);
+        }
+        
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .card li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .card li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: inherit;
+        }
+        
+        .white-hat-card li::before {
+            color: var(--white-hat-color);
+        }
+        
+        .black-hat-card li::before {
+            color: var(--black-hat-color);
+        }
+        
+        .gray-hat-card li::before {
+            color: var(--gray-hat-color);
+        }
+        
+        /* Comparison section */
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .comparison-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .comparison-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .white-hat-comparison h3 {
+            color: var(--white-hat-color);
+        }
+        
+        .black-hat-comparison h3 {
+            color: var(--black-hat-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #0c0c0c;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+        
+        .footer-link {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--white-hat-color);
+        }
+        
+        .copyright {
+            opacity: 0.7;
+            font-size: 0.9rem;
+        }
+        
+        /* Toggle switch */
+        .toggle-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            gap: 1rem;
+        }
+        
+        .toggle-label {
+            font-size: 1.1rem;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--black-hat-color);
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: var(--white-hat-color);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        /* Animation classes */
+        .fade-in {
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease forwards;
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .slide-in-right {
+            animation: slideInRight 0.8s ease forwards;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .nav-container {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="binary-bg" id="binaryBackground"></div>
+        <div class="header-content">
+            <h1>HACKER ETHICS</h1>
+            <p class="subtitle">Understanding the differences between Black Hat, White Hat, and Gray Hat hackers</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="#white-hat" class="nav-item">White Hat</a>
+            <a href="#black-hat" class="nav-item">Black Hat</a>
+            <a href="#gray-hat" class="nav-item">Gray Hat</a>
+            <a href="#comparison" class="nav-item">Comparison</a>
+        </div>
+    </nav>
+    
+    <main>
+        <section id="introduction" class="visible">
+            <h2>Understanding Hacker Types</h2>
+            <p>In the cybersecurity world, hackers are often categorized by their intentions and methods. The terms "Black Hat," "White Hat," and "Gray Hat" help distinguish between malicious attackers and ethical security professionals.</p>
+            
+            <div class="toggle-container">
+                <span class="toggle-label">Dark Theme</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="themeToggle" checked>
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label">Light Theme</span>
+            </div>
+        </section>
+        
+        <section id="white-hat" class="hat-section white-hat">
+            <h2>White Hat Hackers</h2>
+            <p>White Hat hackers, also known as ethical hackers, use their skills to improve security by exposing vulnerabilities before malicious hackers can detect and exploit them.</p>
+            
+            <div class="cards-container">
+                <div class="card white-hat-card slide-in-left">
+                    <h3>Characteristics</h3>
+                    <ul>
+                        <li>Work with organizations to strengthen security</li>
+                        <li>Follow legal and ethical guidelines</li>
+                        <li>Obtain permission before testing systems</li>
+                        <li>Report vulnerabilities responsibly</li>
+                        <li>Often certified (e.g., CEH, CISSP)</li>
+                    </ul>
+                </div>
+                
+                <div class="card white-hat-card slide-in-right">
+                    <h3>Common Activities</h3>
+                    <ul>
+                        <li>Penetration testing</li>
+                        <li>Vulnerability assessments</li>
+                        <li>Security audits</li>
+                        <li>Security tool development</li>
+                        <li>Security training and awareness</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="black-hat" class="hat-section black-hat">
+            <h2>Black Hat Hackers</h2>
+            <p>Black Hat hackers operate with malicious intent, seeking to exploit vulnerabilities for personal gain, to cause damage, or to steal sensitive information.</p>
+            
+            <div class="cards-container">
+                <div class="card black-hat-card slide-in-left">
+                    <h3>Characteristics</h3>
+                    <ul>
+                        <li>Act illegally and unethically</li>
+                        <li>Motivated by personal gain or malice</li>
+                        <li>Do not seek permission</li>
+                        <li>Often work anonymously</li>
+                        <li>May be part of organized crime</li>
+                    </ul>
+                </div>
+                
+                <div class="card black-hat-card slide-in-right">
+                    <h3>Common Activities</h3>
+                    <ul>
+                        <li>Data theft and espionage</li>
+                        <li>Deploying malware and ransomware</li>
+                        <li>Financial fraud</li>
+                        <li>Website defacement</li>
+                        <li>DDoS attacks</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="gray-hat" class="hat-section gray-hat">
+            <h2>Gray Hat Hackers</h2>
+            <p>Gray Hat hackers operate in a moral gray area. They may violate laws or typical ethical standards, but without the malicious intent of Black Hat hackers.</p>
+            
+            <div class="cards-container">
+                <div class="card gray-hat-card slide-in-left">
+                    <h3>Characteristics</h3>
+                    <ul>
+                        <li>May hack without permission but without malicious intent</li>
+                        <li>Often disclose vulnerabilities publicly</li>
+                        <li>May request payment after discovering vulnerabilities</li>
+                        <li>Operate in legal gray areas</li>
+                        <li>Can transition to White or Black Hat roles</li>
+                    </ul>
+                </div>
+                
+                <div class="card gray-hat-card slide-in-right">
+                    <h3>Common Activities</h3>
+                    <ul>
+                        <li>Unauthorized vulnerability discovery</li>
+                        <li>Public disclosure of security flaws</li>
+                        <li>Bug bounty participation (sometimes without permission)</li>
+                        <li>Security research without clear authorization</li>
+                        <li>Creating tools that can be used for good or bad purposes</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="comparison">
+            <h2>Side-by-Side Comparison</h2>
+            
+            <div class="comparison">
+                <div class="comparison-card white-hat-comparison slide-in-left">
+                    <h3>White Hat</h3>
+                    <ul>
+                        <li><strong>Legal Status:</strong> Legal, with permission</li>
+                        <li><strong>Intent:</strong> Improve security</li>
+                        <li><strong>Methods:</strong> Ethical and responsible</li>
+                        <li><strong>Disclosure:</strong> Private, to the organization</li>
+                        <li><strong>Motivation:</strong> Protection, career, ethics</li>
+                        <li><strong>Examples:</strong> Security consultants, penetration testers</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card black-hat-comparison slide-in-right">
+                    <h3>Black Hat</h3>
+                    <ul>
+                        <li><strong>Legal Status:</strong> Illegal</li>
+                        <li><strong>Intent:</strong> Personal gain, damage</li>
+                        <li><strong>Methods:</strong> Unethical, malicious</li>
+                        <li><strong>Disclosure:</strong> None, or exploit</li>
+                        <li><strong>Motivation:</strong> Financial gain, notoriety, ideology</li>
+                        <li><strong>Examples:</strong> Cybercriminals, state-sponsored attackers</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <p>Cybersecurity Awareness - Understanding Hacker Types</p>
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact</a>
+            </div>
+            <p class="copyright">&copy; 2023 Cybersecurity Education. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Create binary animation in header
+        function createBinary() {
+            const binaryBg = document.getElementById('binaryBackground');
+            const characters = '01';
+            
+            for (let i = 0; i < 50; i++) {
+                const binary = document.createElement('div');
+                binary.className = 'binary';
+                binary.textContent = '';
+                
+                // Create random binary string
+                const length = Math.floor(Math.random() * 10) + 5;
+                for (let j = 0; j < length; j++) {
+                    binary.textContent += characters.charAt(Math.floor(Math.random() * characters.length));
+                }
+                
+                binary.style.left = Math.random() * 100 + 'vw';
+                binary.style.animationDuration = (Math.random() * 10 + 5) + 's';
+                binary.style.animationDelay = Math.random() * 5 + 's';
+                
+                binaryBg.appendChild(binary);
+            }
+        }
+        
+        // Scroll animation for sections
+        function checkVisibility() {
+            const sections = document.querySelectorAll('section');
+            const windowHeight = window.innerHeight;
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                if (sectionTop < windowHeight - 100) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+        
+        // Theme toggle functionality
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            
+            themeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    document.documentElement.style.setProperty('--dark-bg', '#121212');
+                    document.documentElement.style.setProperty('--card-bg', '#1e1e1e');
+                    document.documentElement.style.setProperty('--text-color', '#f5f5f7');
+                } else {
+                    document.documentElement.style.setProperty('--dark-bg', '#f5f5f7');
+                    document.documentElement.style.setProperty('--card-bg', '#ffffff');
+                    document.documentElement.style.setProperty('--text-color', '#333333');
+                }
+            });
+        }
+        
+        // Smooth scrolling for navigation
+        function setupSmoothScroll() {
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            navItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetSection = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        }
+        
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            createBinary();
+            setupThemeToggle();
+            setupSmoothScroll();
+            checkVisibility(); // Check initial visibility
+            
+            window.addEventListener('scroll', checkVisibility);
+        });
+    </script>
+</body>
+</html>
